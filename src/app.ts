@@ -3,11 +3,19 @@ import process, { env } from 'process';
 import { join } from 'path';
 import express, { NextFunction, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
-import { ClientRouter } from './routes/ClientRoutes';
-import { AdminController } from './controllers/AdminController';
+// import { ClientRouter } from './routes/ClientRoutes';
+// import { AdminController } from './controllers/AdminController';
+import './routes/ClientRoutes';
+import './routes/AdminRoutes';
 
-new ClientRouter();
-new AdminController();
+// new ClientRouter();
+// new AdminController();
+
+import { usePostRoutesStore } from './core/router/store/PostRoutesStore';
+
+const routers = usePostRoutesStore.findAll();
+
+console.log({ routers });
 
 const app = express();
 
@@ -34,6 +42,12 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' })); // handle Manual
 //   res.send('<h1>App running</h1>');
 // });
 // app.use('/', ClientRoute);
+
+if (routers.length > 0) {
+  routers.forEach(route => {
+    app.use(route.baseUrl, route.router);
+  });
+}
 
 /// Global error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

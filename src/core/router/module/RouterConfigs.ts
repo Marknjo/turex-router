@@ -30,21 +30,23 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
     console.log(ManageId.findCurrentId(ProvidersTypes.CONTROLLER), targetId);
 
     // /// Prep Merge Params configs
-    // const mergeParamsConfigs = new CofingsPrepper(
-    //   targetId,
-    //   constructor,
-    //   configs
-    // );
-    // const { mergeParamsOption, mergeParamsWithOptions } =
-    //   mergeParamsConfigs.getMergeParamsConfigs();
+    const mergeParamsConfigs = new CofingsPrepper(
+      targetId,
+      constructor,
+      configs
+    );
+    const { mergeParamsOption, mergeParamsWithOptions } =
+      mergeParamsConfigs.getMergeParamsConfigs();
 
-    // /// Init app router
-    // const appRoute = new PostRoutes(configs, targetId, mergeParamsOption);
+    /// Init app router
+    const appRoute = new PostRoutes(configs, targetId, mergeParamsOption);
 
-    // /// Initialize route
-    // const router = appRoute.init();
+    console.log(appRoute);
 
-    // /// MERGE PARAMS if an option
+    /// Initialize route
+    const router = appRoute.init();
+
+    // // /// MERGE PARAMS if an option
     // /// Dispatch PreRouter Data
     // usePreRoutesStore.dispatch({
     //   routeId: targetId,
@@ -53,13 +55,12 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
     //   hasMergeParamsWith: mergeParamsWithOptions ? true : false,
     // });
 
-    // /// Merge params
+    // // /// Merge params
     // new ParamsMerger(router, mergeParamsWithOptions);
 
     // // Use middleware to merge defined route
 
     // /// Run route Pre-Middleware
-
     // // Match routes by controller handler and merge endPoint/handlerMiddleware
     // appRoute.matchRouteWithHandler(router);
 

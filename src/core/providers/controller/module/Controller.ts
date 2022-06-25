@@ -20,9 +20,9 @@ export const Controller = function () {
       constructorName: constructor.name,
     });
 
-    console.log(
-      `Controller base class decorator :(${constructor.name}): running...📍📍📍📍`
-    );
+    // console.log(
+    //   `Controller base class decorator :(${constructor.name}): running...📍📍📍📍`
+    // );
 
     // Generate Id if not declared
     const targetId = ManageId.findId(ProvidersTypes.CONTROLLER) as string;

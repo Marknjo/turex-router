@@ -1,6 +1,6 @@
 import { AppUtils } from '../../library/helpers/Utils';
 import { Meta } from '../../stores/meta';
-import { AppMetaKeys, ProvidersTypes } from '../../types';
+import { AppMetaKeys, GenericConstructor, ProvidersTypes } from '../../types';
 import {
   RouterCofingsPrepper,
   RouterConfigsOptions,
@@ -37,7 +37,7 @@ export default class CofingsPrepper {
 
   constructor(
     private targetId: string,
-    private routerConstructor: Function,
+    private routerConstructor: GenericConstructor,
     private configs: RouterConfigsOptions
   ) {
     this.getRouterConfigsViaHandlers();
@@ -113,9 +113,11 @@ export default class CofingsPrepper {
    * @returns A router configurations defined via a handler
    */
   private getRouterConfigsViaHandlers() {
-    const handlers = AppUtils.getControllerHandlers(
-      this.routerConstructor.prototype
-    );
+    const handlers = AppUtils.getControllerHandlers(this.routerConstructor);
+
+    if (handlers.length === 0) {
+      return;
+    }
 
     for (let handler of handlers) {
       /// MergeParams

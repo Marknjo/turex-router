@@ -45,7 +45,9 @@ class Utils {
   }
 
   getControllerHandlers(targetConstructor: GenericConstructor) {
-    return Object.getOwnPropertyNames(targetConstructor.prototype);
+    return Object.getOwnPropertyNames(targetConstructor.prototype).filter(
+      prop => prop !== 'constructor'
+    );
   }
 }
 
