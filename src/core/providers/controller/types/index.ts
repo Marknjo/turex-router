@@ -7,3 +7,6 @@ export * from './HttpMethods';
 
 /// Cookies
 //export * from './CookiesDefination';
+
+// Handler
+export * from './ControllerHandler';

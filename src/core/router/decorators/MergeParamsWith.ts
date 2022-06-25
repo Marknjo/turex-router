@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { SiteWideKeys } from '../../types';
+import { AppMetaKeys } from '../../types';
 import { RouterMergeParamsWithHandler } from '../types';
 
 export const MergeParamsWith = function (
@@ -7,10 +7,10 @@ export const MergeParamsWith = function (
   handler: string,
   _desc: RouterMergeParamsWithHandler
 ) {
-  Reflect.defineMetadata(
-    SiteWideKeys.ROUTER_MERGE_PARAMS_WITH,
-    true,
-    constructor,
-    handler
-  );
+  // Reflect.defineMetadata(
+  //   AppMetaKeys.ROUTER_MERGE_PARAMS_WITH,
+  //   true,
+  //   constructor,
+  //   handler
+  // );
 };
