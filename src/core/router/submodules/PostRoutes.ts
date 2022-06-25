@@ -36,6 +36,8 @@ export default class PostRoutes {
 
     /// Assign controller store to controller handlers
     this.routerStore = useCtrStore.findAll();
+
+    // console.log({ controllers: this.routerStore, ctrId: this.controllerId });
   }
 
   /**

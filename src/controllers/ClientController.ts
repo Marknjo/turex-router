@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '../core';
+import { Controller, Get } from '../core';
 
 @Controller()
 export class clientController {
@@ -7,7 +7,7 @@ export class clientController {
     return '<h1>Test HomePage</h2>';
   }
 
-  @Post('/about')
+  @Get('/about')
   aboutPage() {
     return '<h1>This is about page</h2>';
   }

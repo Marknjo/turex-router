@@ -120,19 +120,6 @@ export default class CofingsPrepper {
     }
 
     for (let handler of handlers) {
-      /// MergeParams
-      // const getMergeParamsOption = Reflect.getMetadata(
-      //   AppMetaKeys.ROUTER_MERGE_PARAMS,
-      //   this.routerConstructor.prototype,
-      //   handler
-      // );
-
-      // const getMergeParamsOption = Reflect.getMetadata(
-      //   AppMetaKeys.ROUTER_MERGE_PARAMS,
-      //   this.routerConstructor.prototype,
-      //   handler
-      // );
-
       // get merge params
       const getMergeParamsOption = Meta.getData<boolean>({
         metaKey: AppMetaKeys.ROUTER_MERGE_PARAMS,
@@ -147,13 +134,6 @@ export default class CofingsPrepper {
           handler
         ]() as boolean;
       }
-
-      /// Handle use merge configs
-      // const getMergeParamsWithOptions = Reflect.getMetadata(
-      //   AppMetaKeys.ROUTER_MERGE_PARAMS_WITH,
-      //   this.routerConstructor.prototype,
-      //   handler
-      // );
 
       /// Get Merge Params
       const getMergeParamsWithOptions = Meta.getData<boolean>({

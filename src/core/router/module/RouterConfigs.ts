@@ -6,16 +6,13 @@ import { RouterConfigsOptions } from '../types';
 import { usePreRoutesStore } from '../store/PreRoutesStore';
 import { Meta } from '../../stores/meta';
 import { ManageId } from '../../stores/idManager';
-import { useCtrStore } from '../../providers/controller';
 
 export const RouterConfigs = function (configs: RouterConfigsOptions) {
   return function (constructor: GenericConstructor) {
-    console.log(
-      `Router config :(${constructor.name}): running...📍📍📍📍. Controller: `,
-      constructor
-    );
-
-    console.log(useCtrStore.findAll());
+    // console.log(
+    //   `Router config :(${constructor.name}): running...📍📍📍📍. Controller: `,
+    //   constructor
+    // );
 
     // Initialize router configs values
     Meta.define({
@@ -27,7 +24,6 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
 
     // /// Get Target ID
     const targetId = ManageId.findId(ProvidersTypes.ROUTER)! as string;
-    console.log(ManageId.findCurrentId(ProvidersTypes.CONTROLLER), targetId);
 
     // /// Prep Merge Params configs
     const mergeParamsConfigs = new CofingsPrepper(
@@ -41,31 +37,29 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
     /// Init app router
     const appRoute = new PostRoutes(configs, targetId, mergeParamsOption);
 
-    console.log(appRoute);
-
     /// Initialize route
     const router = appRoute.init();
 
-    // // /// MERGE PARAMS if an option
-    // /// Dispatch PreRouter Data
-    // usePreRoutesStore.dispatch({
-    //   routeId: targetId,
-    //   router,
-    //   routeName: constructor.name,
-    //   hasMergeParamsWith: mergeParamsWithOptions ? true : false,
-    // });
+    // /// MERGE PARAMS if an option
+    /// Dispatch PreRouter Data
+    usePreRoutesStore.dispatch({
+      routeId: targetId,
+      router,
+      routeName: constructor.name,
+      hasMergeParamsWith: mergeParamsWithOptions ? true : false,
+    });
 
     // // /// Merge params
-    // new ParamsMerger(router, mergeParamsWithOptions);
+    new ParamsMerger(router, mergeParamsWithOptions);
 
-    // // Use middleware to merge defined route
+    // Use middleware to merge defined route
 
-    // /// Run route Pre-Middleware
-    // // Match routes by controller handler and merge endPoint/handlerMiddleware
-    // appRoute.matchRouteWithHandler(router);
+    /// Run route Pre-Middleware
+    // Match routes by controller handler and merge endPoint/handlerMiddleware
+    appRoute.matchRouteWithHandler(router);
 
-    // /// Dispatch router to store
-    // appRoute.dispatchRoute(router);
+    /// Dispatch router to store
+    appRoute.dispatchRoute(router);
 
     // /// Reset Target ID
     ManageId.regenerateId({
