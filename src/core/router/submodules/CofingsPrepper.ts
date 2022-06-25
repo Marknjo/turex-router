@@ -3,6 +3,7 @@ import {
   RouterCofingsPrepper,
   RouterConfigsOptions,
   RouterMergeParamsWithOptions,
+  RouterPrepMergeParamsWithResponse,
 } from '../types';
 
 /**
@@ -149,7 +150,7 @@ export default class CofingsPrepper {
    */
   private mergeParamsWithBasedOnSource():
     | boolean
-    | RoutePrepMergeParamsWithResponse[] {
+    | RouterPrepMergeParamsWithResponse[] {
     /// Use middleware where params merging via handler
     if (this.handlerMergeParamsWithOptions.length > 0) {
       return this.filterDublicatesAndTransform(
