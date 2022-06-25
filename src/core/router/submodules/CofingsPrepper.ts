@@ -1,4 +1,6 @@
-import { AppMetaKeys } from '../../types';
+import { AppUtils } from '../../library/helpers/Utils';
+import { Meta } from '../../stores/meta';
+import { AppMetaKeys, ProvidersTypes } from '../../types';
 import {
   RouterCofingsPrepper,
   RouterConfigsOptions,
@@ -34,6 +36,7 @@ export default class CofingsPrepper {
   private handlerMergeParamsWithOptions: RouterMergeParamsWithOptions[] = [];
 
   constructor(
+    private targetId: string,
     private routerConstructor: Function,
     private configs: RouterConfigsOptions
   ) {
@@ -110,13 +113,31 @@ export default class CofingsPrepper {
    * @returns A router configurations defined via a handler
    */
   private getRouterConfigsViaHandlers() {
-    for (let handler in this.routerConstructor.prototype) {
+    const handlers = AppUtils.getControllerHandlers(
+      this.routerConstructor.prototype
+    );
+
+    for (let handler of handlers) {
       /// MergeParams
       // const getMergeParamsOption = Reflect.getMetadata(
       //   AppMetaKeys.ROUTER_MERGE_PARAMS,
       //   this.routerConstructor.prototype,
       //   handler
       // );
+
+      // const getMergeParamsOption = Reflect.getMetadata(
+      //   AppMetaKeys.ROUTER_MERGE_PARAMS,
+      //   this.routerConstructor.prototype,
+      //   handler
+      // );
+
+      // get merge params
+      const getMergeParamsOption = Meta.getData<boolean>({
+        metaKey: AppMetaKeys.ROUTER_MERGE_PARAMS,
+        id: this.targetId,
+        propertyKey: handler,
+        metaType: ProvidersTypes.ROUTER,
+      });
 
       /// Handle merge config
       if (getMergeParamsOption) {
@@ -131,6 +152,14 @@ export default class CofingsPrepper {
       //   this.routerConstructor.prototype,
       //   handler
       // );
+
+      /// Get Merge Params
+      const getMergeParamsWithOptions = Meta.getData<boolean>({
+        metaKey: AppMetaKeys.ROUTER_MERGE_PARAMS_WITH,
+        id: this.targetId,
+        propertyKey: handler,
+        metaType: ProvidersTypes.ROUTER,
+      });
 
       if (getMergeParamsWithOptions) {
         const paramsMergeWithOptions =

@@ -1,10 +1,11 @@
-import { randomUUID } from 'crypto';
-import { GenericConstructor } from '../../types';
+import { AppMetaKeys, GenericConstructor, ProvidersTypes } from '../../types';
 import CofingsPrepper from '../submodules/CofingsPrepper';
 import ParamsMerger from '../submodules/ParamsMerger';
 import PostRoutes from '../submodules/PostRoutes';
 import { RouterConfigsOptions } from '../types';
 import { usePreRoutesStore } from '../store/PreRoutesStore';
+import { Meta } from '../../stores/meta';
+import { ManageId } from '../../stores/idManager';
 
 export const RouterConfigs = function (configs: RouterConfigsOptions) {
   return function (constructor: GenericConstructor) {
@@ -12,17 +13,28 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
     //   `Router config :(${constructor.name}): running...📍📍📍📍. Controller: `,
     //   constructor
     // );
+    // Initialize router configs values
+    Meta.define({
+      metaType: ProvidersTypes.ROUTER,
+      metaKey: AppMetaKeys.BASE_CONSTRUCTOR,
+      constructorName: constructor.name,
+      targetConstructor: constructor,
+    });
 
-    /// Generate the a router Id
-    const routeId = randomUUID();
+    /// Get Target ID
+    const targetId = ManageId.findId(ProvidersTypes.ROUTER)! as string;
 
     /// Prep Merge Params configs
-    const mergeParamsConfigs = new CofingsPrepper(constructor, configs);
+    const mergeParamsConfigs = new CofingsPrepper(
+      targetId,
+      constructor,
+      configs
+    );
     const { mergeParamsOption, mergeParamsWithOptions } =
       mergeParamsConfigs.getMergeParamsConfigs();
 
     /// Init app router
-    const appRoute = new PostRoutes(configs, routeId, mergeParamsOption);
+    const appRoute = new PostRoutes(configs, targetId, mergeParamsOption);
 
     /// Initialize route
     const router = appRoute.init();
@@ -30,7 +42,7 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
     /// MERGE PARAMS if an option
     /// Dispatch PreRouter Data
     usePreRoutesStore.dispatch({
-      routeId,
+      routeId: targetId,
       router,
       routeName: constructor.name,
       hasMergeParamsWith: mergeParamsWithOptions ? true : false,
@@ -48,5 +60,12 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
 
     /// Dispatch router to store
     appRoute.dispatchRoute(router);
+
+    /// Reset Target ID
+    ManageId.regenerateId({
+      type: ProvidersTypes.ROUTER,
+      prevId: targetId,
+      name: constructor.name,
+    });
   };
 };

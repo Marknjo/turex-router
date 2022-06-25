@@ -1,9 +1,10 @@
-import 'reflect-metadata';
-import { AppMetaKeys } from '../../types';
+// import 'reflect-metadata';
+import { Meta } from '../../stores/meta';
+import { AppMetaKeys, ProvidersTypes } from '../../types';
 import { RouterMergeParamsWithHandler } from '../types';
 
 export const MergeParamsWith = function (
-  constructor: any,
+  _: any,
   handler: string,
   _desc: RouterMergeParamsWithHandler
 ) {
@@ -13,4 +14,11 @@ export const MergeParamsWith = function (
   //   constructor,
   //   handler
   // );
+
+  Meta.define<boolean>({
+    metaKey: AppMetaKeys.ROUTER_MERGE_PARAMS,
+    metaType: ProvidersTypes.ROUTER,
+    metaValue: true,
+    propertyKey: handler,
+  });
 };

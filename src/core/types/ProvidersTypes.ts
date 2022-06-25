@@ -4,4 +4,5 @@ export enum ProvidersTypes {
   MIDDLEWARE = 'middleware',
   MODEL = 'model',
   INJECTABLE = 'injectable',
+  ROUTER = 'router',
 }

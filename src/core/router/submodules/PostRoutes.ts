@@ -1,5 +1,7 @@
 import express, { Request, Response, Router } from 'express';
 import { ControllerModel, useCtrStore } from '../../providers/controller';
+import { ManageId } from '../../stores/idManager';
+import { ProvidersTypes } from '../../types';
 import { usePostRoutesStore } from '../store/PostRoutesStore';
 // import { AppMetaKeys } from '../../types';
 // import { RouterConfigs } from '../core/RouterConfigs';
@@ -28,6 +30,9 @@ export default class PostRoutes {
     //   AppMetaKeys.CONTROLLER_ID,
     //   RouterConfigs
     // );
+    this.controllerId = ManageId.findCurrentId(
+      ProvidersTypes.CONTROLLER
+    ) as string;
 
     /// Assign controller store to controller handlers
     this.routerStore = useCtrStore.findAll();

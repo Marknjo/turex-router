@@ -56,7 +56,7 @@ export const Controller = function () {
     /// Regenerate Id
     ManageId.regenerateId({
       type: ProvidersTypes.CONTROLLER,
-      prevId: ManageId.findId(ProvidersTypes.CONTROLLER) as string,
+      prevId: targetId,
       name: constructor.name,
     });
   };
