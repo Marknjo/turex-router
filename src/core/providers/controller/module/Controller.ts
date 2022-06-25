@@ -7,6 +7,8 @@ import {
   ProvidersTypes,
   AppMetaKeys,
 } from '../../../types';
+import { useCtrStore } from '../store';
+import { HttpMethods } from '../types';
 
 export const Controller = function () {
   return function (constructor: GenericConstructor) {
@@ -18,42 +20,42 @@ export const Controller = function () {
       constructorName: constructor.name,
     });
 
-    // Generate Id if not declared
-    const targetId = ManageId.findId(ProvidersTypes.CONTROLLER) as string;
-
-    // console.log(
-    //   `Controller :(${constructor.name}): running... 🚩🚩🚩🚩🚩 . Constructor: `,
-    //   constructor,
-    //   genetatedId
-    // );
-
-    const foundProperties = Meta.getPropertiesKeysMeta(
-      targetId,
-      ProvidersTypes.CONTROLLER
+    console.log(
+      `Controller base class decorator :(${constructor.name}): running...📍📍📍📍`
     );
 
-    console.log('Found properties: ', foundProperties);
+    // Generate Id if not declared
+    const targetId = ManageId.findId(ProvidersTypes.CONTROLLER) as string;
 
     const handlers = AppUtils.getControllerHandlers(constructor);
 
     for (let handler of handlers) {
-      const httpMethod = Meta.getData<string>({
+      const httpMethod: HttpMethods | boolean = Meta.getData<HttpMethods>({
         id: targetId,
         metaType: ProvidersTypes.CONTROLLER,
         metaKey: AppMetaKeys.METHOD,
         propertyKey: handler,
-      });
+      }) as HttpMethods | boolean;
 
-      const path = Meta.getData<string>({
+      const routerUrl: string | boolean = Meta.getData<string>({
         id: targetId,
         metaType: ProvidersTypes.CONTROLLER,
-        metaKey: AppMetaKeys.PATH,
+        metaKey: AppMetaKeys.ROUTE_URL,
         propertyKey: handler,
-      });
+      }) as HttpMethods | boolean;
 
-      if (path) {
-        console.log('Running 🚩🚩🚩🚩');
-        console.log({ httpMethod, path });
+      if (routerUrl && httpMethod) {
+        // console.log({ httpMethod, routerUrl });
+
+        const foundHttpMethod = httpMethod as HttpMethods;
+        const foundRouteUrl = routerUrl as string;
+
+        useCtrStore.dispatch({
+          controllerId: targetId,
+          handlerFn: constructor.prototype[handler],
+          httpMethod: foundHttpMethod,
+          routeUrl: foundRouteUrl,
+        });
       }
     }
 

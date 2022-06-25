@@ -1,7 +1,7 @@
 export enum AppMetaKeys {
   REQ_RES_FEATURE = 'feature',
   BODY_VALIDATOR = 'bodyValidator',
-  PATH = 'path',
+  ROUTE_URL = 'routeUrl',
   METHOD = 'method',
   ASYNC = 'async',
   STATUS_CODE = 'statusCode',
