@@ -1,7 +1,7 @@
 {
   "name": "turex-router",
   "version": "0.1.0",
-  "description": "A Typescript Metadate library for express that uses ES6.",
+  "description": "An Express router using Typescript decorators that compiles to ES6 and beyound.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

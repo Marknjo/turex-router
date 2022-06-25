@@ -2,7 +2,9 @@
 
 ## :balloon: Overview
 
-A Typescript Metadate library for express that uses ES6.
+An argumentation of Epress.js Router with Typescript Decorators, using custom made Turex Meta for managing state instead of Reflex Metadata library.
+
+The whole idea is to take advantage of Decorators, while not compiling the whole code to ES5. Afterall, this code will be running on the server side. No need of compiling it back to ES5.
 
 ## :anger: Requirement
 
