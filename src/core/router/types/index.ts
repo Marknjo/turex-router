@@ -5,5 +5,5 @@ export * from './RouterConfigsOptions';
 // export * from './RouteMergeParamsHandler';
 export * from './RouterMergeParamsWithOptions';
 // export * from './RouteConfigsViaHandler';
-// export * from './RoutePrepMergeParamsConfigs';
+export * from './RouterCofingsPrepper';
 export * from './RouterPrepMergeParamsWithResponse';

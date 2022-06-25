@@ -16,7 +16,7 @@ const routesBinder = function (httpMethod: HttpMethods) {
 
       /// Define Associated Method
       // Reflect.defineMetadata(
-      //   SiteWideKeys.METHOD,
+      //   AppMetaKeys.METHOD,
       //   httpMethod,
       //   constructor,
       //   methodName
