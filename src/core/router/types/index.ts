@@ -6,4 +6,4 @@ export * from './RouterConfigsOptions';
 export * from './RouterMergeParamsWithOptions';
 // export * from './RouteConfigsViaHandler';
 // export * from './RoutePrepMergeParamsConfigs';
-// export * from './RoutePrepMergeParamsWithResponse';
+export * from './RouterPrepMergeParamsWithResponse';
