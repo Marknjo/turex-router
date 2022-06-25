@@ -1,5 +1,5 @@
 // Export Configs
-export * from './RouterConfigs';
+export * from './core/RouterConfigs';
 
 // Export helpers
 //export * from './decorators/MergeParams';

@@ -1,5 +1,5 @@
-import { GenericConstructor } from '../types';
-import { RouterConfigsOptions } from './types';
+import { GenericConstructor } from '../../types';
+import { RouterConfigsOptions } from '../types';
 
 export const RouterConfigs = function (configs: RouterConfigsOptions) {
   return function (constructor: GenericConstructor) {
