@@ -2,7 +2,7 @@
 // export * from './BaseRouter';
 export * from './RouterConfigsOptions';
 // export * from './RouteMergeParamsWithHandler';
-// export * from './RouteMergeParamsHandler';
+export * from './RouterMergeParamsHandler';
 export * from './RouterMergeParamsWithOptions';
 // export * from './RouteConfigsViaHandler';
 export * from './RouterCofingsPrepper';
