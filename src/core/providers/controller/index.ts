@@ -5,7 +5,7 @@ export * from './store';
 export * from './types';
 
 // Core
-export * from './Controller';
+export * from './module/Controller';
 
 // Decorators
 export * from './decorators';

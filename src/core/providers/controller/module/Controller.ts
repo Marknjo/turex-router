@@ -1,8 +1,12 @@
-import { AppUtils } from '../../library/helpers/Utils';
-import { ManageId } from '../../stores/idManager';
+import { AppUtils } from '../../../library/helpers/Utils';
+import { ManageId } from '../../../stores/idManager';
 
-import { Meta } from '../../stores/meta';
-import { GenericConstructor, ProvidersTypes, AppMetaKeys } from '../../types';
+import { Meta } from '../../../stores/meta';
+import {
+  GenericConstructor,
+  ProvidersTypes,
+  AppMetaKeys,
+} from '../../../types';
 
 export const Controller = function () {
   return function (constructor: GenericConstructor) {
