@@ -1,10 +1,10 @@
 /// Imports
 import { Meta } from '../../../stores/meta';
-import { ProvidersTypes } from '../../../types';
-import { ParamsDecoratorsKeys, ParamsDecoratorsActions } from '../types';
+import { AppMetaKeys, ProvidersTypes } from '../../../types';
+import { ParamsDecoratorsActions } from '../types';
 
 /// Define middleware decorator
-export const parametersBinder = function (feature: any, featureCheck: string) {
+export const paramsBinder = function (feature: any, featureCheck: string) {
   return function (_: any, handler: string, position: number) {
     Meta.define<{ [key: string]: boolean | number }>({
       metaKey: feature,
@@ -15,139 +15,144 @@ export const parametersBinder = function (feature: any, featureCheck: string) {
   };
 };
 
-export const Req = parametersBinder(
-  ParamsDecoratorsKeys.REQ,
+export const Ctx = paramsBinder(
+  AppMetaKeys.CONTEXT,
+  ParamsDecoratorsActions.HAS_CTX
+);
+
+export const Req = paramsBinder(
+  AppMetaKeys.REQ,
   ParamsDecoratorsActions.HAS_REQ
 );
 
-export const Res = parametersBinder(
-  ParamsDecoratorsKeys.RES,
+export const Res = paramsBinder(
+  AppMetaKeys.RES,
   ParamsDecoratorsActions.HAS_RES
 );
 
-export const Next = parametersBinder(
-  ParamsDecoratorsKeys.NEXT,
+export const Next = paramsBinder(
+  AppMetaKeys.NEXT,
   ParamsDecoratorsActions.HAS_NEXT
 );
 
-export const SetLocals = parametersBinder(
-  ParamsDecoratorsKeys.LOCALS,
+export const SetLocals = paramsBinder(
+  AppMetaKeys.LOCALS,
   ParamsDecoratorsActions.HAS_LOCALS
 );
 
-export const SetRedirect = parametersBinder(
-  ParamsDecoratorsKeys.SET_REDIRECT,
+export const SetRedirect = paramsBinder(
+  AppMetaKeys.SET_REDIRECT,
   ParamsDecoratorsActions.HAS_REDIRECT
 );
 
-export const GetRequestBody = parametersBinder(
-  ParamsDecoratorsKeys.GET_BODY,
+export const GetRequestBody = paramsBinder(
+  AppMetaKeys.GET_BODY,
   ParamsDecoratorsActions.HAS_BODY
 );
 
-export const GetParams = parametersBinder(
-  ParamsDecoratorsKeys.GET_PARAMS,
+export const GetParams = paramsBinder(
+  AppMetaKeys.GET_PARAMS,
   ParamsDecoratorsActions.HAS_PARAMS
 );
 
-export const GetQueryStrings = parametersBinder(
-  ParamsDecoratorsKeys.GET_QUERY_STRINGS,
+export const GetQueryStrings = paramsBinder(
+  AppMetaKeys.GET_QUERY_STRINGS,
   ParamsDecoratorsActions.HAS_QUERY_STRINGS
 );
 
-export const GetOriginalUrl = parametersBinder(
-  ParamsDecoratorsKeys.GET_ORIGINAL_URL,
+export const GetOriginalUrl = paramsBinder(
+  AppMetaKeys.GET_ORIGINAL_URL,
   ParamsDecoratorsActions.HAS_ORIGINAL_URL
 );
 
-export const GetPath = parametersBinder(
-  ParamsDecoratorsKeys.GET_PATH,
+export const GetPath = paramsBinder(
+  AppMetaKeys.GET_PATH,
   ParamsDecoratorsActions.HAS_PATH
 );
 
-export const GetBaseUrl = parametersBinder(
-  ParamsDecoratorsKeys.GET_BASE_URL,
+export const GetBaseUrl = paramsBinder(
+  AppMetaKeys.GET_BASE_URL,
   ParamsDecoratorsActions.HAS_BASE_URL
 );
 
-export const GetProtocol = parametersBinder(
-  ParamsDecoratorsKeys.GET_PROTOCOL,
+export const GetProtocol = paramsBinder(
+  AppMetaKeys.GET_PROTOCOL,
   ParamsDecoratorsActions.HAS_PROTOCOL
 );
 
-export const GetHostname = parametersBinder(
-  ParamsDecoratorsKeys.GET_HOSTNAME,
+export const GetHostname = paramsBinder(
+  AppMetaKeys.GET_HOSTNAME,
   ParamsDecoratorsActions.HAS_HOSTNAME
 );
 
 /// IPS
-export const GetIp = parametersBinder(
-  ParamsDecoratorsKeys.GET_IP,
+export const GetIp = paramsBinder(
+  AppMetaKeys.GET_IP,
   ParamsDecoratorsActions.HAS_IP
 );
 
-export const GetIps = parametersBinder(
-  ParamsDecoratorsKeys.GET_IPS,
+export const GetIps = paramsBinder(
+  AppMetaKeys.GET_IPS,
   ParamsDecoratorsActions.HAS_IPS
 );
 
-export const GetSubdomains = parametersBinder(
-  ParamsDecoratorsKeys.GET_SUBDOMAINS,
+export const GetSubdomains = paramsBinder(
+  AppMetaKeys.GET_SUBDOMAINS,
   ParamsDecoratorsActions.HAS_SUBDOMAINS
 );
 
 /// CHECKS
-export const IsSecure = parametersBinder(
-  ParamsDecoratorsKeys.IS_SECURE,
+export const IsSecure = paramsBinder(
+  AppMetaKeys.IS_SECURE,
   ParamsDecoratorsActions.HAS_IS_SECURE
 );
 
-export const IsXhr = parametersBinder(
-  ParamsDecoratorsKeys.IS_XHR,
+export const IsXhr = paramsBinder(
+  AppMetaKeys.IS_XHR,
   ParamsDecoratorsActions.HAS_IS_XHR
 );
 
-export const IsStale = parametersBinder(
-  ParamsDecoratorsKeys.IS_STALE,
+export const IsStale = paramsBinder(
+  AppMetaKeys.IS_STALE,
   ParamsDecoratorsActions.HAS_IS_STALE
 );
 
-export const IsFresh = parametersBinder(
-  ParamsDecoratorsKeys.IS_FRESH,
+export const IsFresh = paramsBinder(
+  AppMetaKeys.IS_FRESH,
   ParamsDecoratorsActions.HAS_IS_FRESH
 );
 
 /// METHODS - REQUEST
-export const GetReqGetter = parametersBinder(
-  ParamsDecoratorsKeys.GET_REQ_GETTER,
+export const GetReqGetter = paramsBinder(
+  AppMetaKeys.GET_REQ_GETTER,
   ParamsDecoratorsActions.HAS_REQ_GETTER
 );
 
 /// COOKIES
-export const SetCookie = parametersBinder(
-  ParamsDecoratorsKeys.SET_COOKIE,
+export const SetCookie = paramsBinder(
+  AppMetaKeys.SET_COOKIE,
   ParamsDecoratorsActions.HAS_SET_COOKIE
 );
 
-export const GetCookies = parametersBinder(
-  ParamsDecoratorsKeys.GET_COOKIES,
+export const GetCookies = paramsBinder(
+  AppMetaKeys.GET_COOKIES,
   ParamsDecoratorsActions.HAS_COOKIES
 );
 
-export const GetSignedCookie = parametersBinder(
-  ParamsDecoratorsKeys.GET_SIGNED_COOKIE,
+export const GetSignedCookie = paramsBinder(
+  AppMetaKeys.GET_SIGNED_COOKIE,
   ParamsDecoratorsActions.HAS_SIGNED_COOKIE
 );
 
-export const ClearCookie = parametersBinder(
-  ParamsDecoratorsKeys.CLEAR_COOKIE,
+export const ClearCookie = paramsBinder(
+  AppMetaKeys.CLEAR_COOKIE,
   ParamsDecoratorsActions.HAS_CLEAR_COOKIE
 );
 
 ///// THIRD PARTY SUPPORT
 
 /// SUpport of cookie-session middleware
-export const GetSession = parametersBinder(
-  ParamsDecoratorsKeys.GET_SESSION,
+export const GetSession = paramsBinder(
+  AppMetaKeys.GET_SESSION,
   ParamsDecoratorsActions.HAS_SESSION
 );

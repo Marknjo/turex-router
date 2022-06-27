@@ -1,4 +1,5 @@
 export enum ParamsDecoratorsActions {
+  HAS_CTX = 'hasCtx',
   HAS_REDIRECT = 'hasRedirect',
   HAS_LOCALS = 'hasLocals',
   HAS_NEXT = 'hasNextFunction',

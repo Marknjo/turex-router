@@ -29,6 +29,8 @@ export const Controller = function () {
 
     const handlers = AppUtils.getControllerHandlers(constructor);
 
+    console.log({ handlers }, '🚩🚩🚩🚩🚩🚩');
+
     for (let handler of handlers) {
       const httpMethod: HttpMethods | boolean = Meta.getData<HttpMethods>({
         id: targetId,

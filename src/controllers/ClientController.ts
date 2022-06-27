@@ -1,9 +1,10 @@
-import { Controller, Get } from '../core';
+import { Request } from 'express';
+import { Controller, Get, Req } from '../core';
 
 @Controller()
 export class clientController {
   @Get('/')
-  homePage() {
+  homePage(@Req req: Request) {
     return '<h1>Test HomePage</h2>';
   }
 
