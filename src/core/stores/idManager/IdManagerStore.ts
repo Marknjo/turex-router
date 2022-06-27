@@ -8,20 +8,20 @@ class IdManagerStore extends BaseStore<
   IdManagerModel,
   Listener<IdManagerModel>
 > {
-  private static initilizer: IdManagerStore;
+  private static initializer: IdManagerStore;
 
   private targetId: string | boolean = false;
 
   /**
-   * Store initilizer
+   * Store initializer
    */
   static get init() {
-    if (!IdManagerStore.initilizer) {
-      IdManagerStore.initilizer = new IdManagerStore();
-      return IdManagerStore.initilizer;
+    if (!IdManagerStore.initializer) {
+      IdManagerStore.initializer = new IdManagerStore();
+      return IdManagerStore.initializer;
     }
 
-    return IdManagerStore.initilizer;
+    return IdManagerStore.initializer;
   }
 
   private constructor() {

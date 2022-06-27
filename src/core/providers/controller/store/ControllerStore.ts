@@ -5,18 +5,18 @@ class ControllerStore extends BaseStore<
   ControllerModel,
   Listener<ControllerModel>
 > {
-  private static initilizer: ControllerStore;
+  private static initializer: ControllerStore;
 
   /**
-   * Store initilizer
+   * Store initializer
    */
   static get init() {
-    if (!ControllerStore.initilizer) {
-      ControllerStore.initilizer = new ControllerStore();
-      return ControllerStore.initilizer;
+    if (!ControllerStore.initializer) {
+      ControllerStore.initializer = new ControllerStore();
+      return ControllerStore.initializer;
     }
 
-    return ControllerStore.initilizer;
+    return ControllerStore.initializer;
   }
 
   constructor() {

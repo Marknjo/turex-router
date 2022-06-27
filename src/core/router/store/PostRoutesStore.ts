@@ -7,18 +7,18 @@ class PostRoutesStore extends BaseStore<
   PostRoutesModel,
   Listener<PostRoutesModel>
 > {
-  private static initilizer: PostRoutesStore;
+  private static initializer: PostRoutesStore;
 
   /**
-   * Store initilizer
+   * Store initializer
    */
   static get init() {
-    if (!PostRoutesStore.initilizer) {
-      PostRoutesStore.initilizer = new PostRoutesStore();
-      return PostRoutesStore.initilizer;
+    if (!PostRoutesStore.initializer) {
+      PostRoutesStore.initializer = new PostRoutesStore();
+      return PostRoutesStore.initializer;
     }
 
-    return PostRoutesStore.initilizer;
+    return PostRoutesStore.initializer;
   }
 
   private constructor() {

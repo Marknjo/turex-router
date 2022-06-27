@@ -5,18 +5,18 @@ class PreRoutesStore extends BaseStore<
   PreRoutesModel,
   Listener<PreRoutesModel>
 > {
-  private static initilizer: PreRoutesStore;
+  private static initializer: PreRoutesStore;
 
   /**
-   * Store initilizer
+   * Store initializer
    */
   static get init() {
-    if (!PreRoutesStore.initilizer) {
-      PreRoutesStore.initilizer = new PreRoutesStore();
-      return PreRoutesStore.initilizer;
+    if (!PreRoutesStore.initializer) {
+      PreRoutesStore.initializer = new PreRoutesStore();
+      return PreRoutesStore.initializer;
     }
 
-    return PreRoutesStore.initilizer;
+    return PreRoutesStore.initializer;
   }
 
   private constructor() {
