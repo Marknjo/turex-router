@@ -19,7 +19,7 @@ export class HandlerInjector {
   /**
    * Store previous provider type
    */
-  private prevTargetId?: string;
+  private prevPropertyKey?: string;
 
   /**
    * Stores collection of all Params assigned to a handler
@@ -207,6 +207,7 @@ export class HandlerInjector {
   // private constructor() {}
   constructor(
     providerType: ProvidersTypes,
+    private handler: string,
     private req: Request,
     private res: Response,
     private next: NextFunction
@@ -215,13 +216,13 @@ export class HandlerInjector {
     this.targetId = ManageId.findCurrentId(providerType) as string;
 
     /// Get all the meta data keys on the object
-    this.optimizeMetadataKeysAssignment(providerType);
+    this.getCurrentPropertyKeyMetadata(providerType);
 
     /// config all Param meta data
     this.configParams();
 
     /// optimize id setting
-    this.optimizeTargetIdAssignment();
+    this.optimizePropertyKeyAssignment();
   }
 
   /**
@@ -246,9 +247,9 @@ export class HandlerInjector {
    *
    * This ensures the the target id is not set more than once for the same target constructor.
    */
-  private optimizeTargetIdAssignment() {
-    if (!this.prevTargetId || this.prevTargetId !== this.targetId) {
-      this.prevTargetId = this.targetId;
+  private optimizePropertyKeyAssignment() {
+    if (!this.prevPropertyKey || this.prevPropertyKey !== this.handler) {
+      this.prevPropertyKey = this.handler;
     }
   }
 
@@ -260,10 +261,10 @@ export class HandlerInjector {
    *
    * @param providerType
    */
-  private optimizeMetadataKeysAssignment(providerType: ProvidersTypes) {
+  private getCurrentPropertyKeyMetadata(providerType: ProvidersTypes) {
     if (
-      (this.metaDataKeys.length === 0 && !this.prevTargetId) ||
-      (this.metaDataKeys.length > 0 && this.prevTargetId !== this.targetId)
+      this.metaDataKeys.length === 0 &&
+      this.prevPropertyKey !== this.handler
     ) {
       this.metaDataKeys = Meta.getPropertiesKeys(
         this.targetId,
@@ -275,9 +276,10 @@ export class HandlerInjector {
   /**
    * Factory for assigning Params/get Param actions and position
    */
-  private assignMetadata() {
+  private getParamsMetaValues() {
     /// A case where there are no handlers if the current target class
     if (this.metaDataKeys.length === 0) {
+      this.handlerArgs = [];
       return;
     }
 
@@ -289,7 +291,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.CONTEXT,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasCtx: boolean } | undefined;
           break;
 
@@ -299,7 +301,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.LOCALS,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasLocals: boolean } | undefined;
           break;
 
@@ -309,7 +311,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_BODY,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasBody: boolean } | undefined;
           break;
 
@@ -319,7 +321,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.REQ,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasRequest: boolean } | undefined;
           break;
 
@@ -329,7 +331,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.RES,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasResponse: boolean } | undefined;
           break;
 
@@ -339,7 +341,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.NEXT,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasNextFunction: boolean } | undefined;
           break;
 
@@ -349,7 +351,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_PARAMS,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasParams: boolean } | undefined;
           break;
 
@@ -359,7 +361,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_QUERY_STRINGS,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasQueryStrings: boolean } | undefined;
           break;
 
@@ -369,7 +371,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_ORIGINAL_URL,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasOriginalUrl: boolean } | undefined;
           break;
 
@@ -379,7 +381,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_COOKIES,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasCookies: boolean } | undefined;
           break;
 
@@ -389,7 +391,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_SIGNED_COOKIE,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasSignedCookie: boolean } | undefined;
           break;
 
@@ -399,7 +401,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_SESSION,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasSession: boolean } | undefined;
           break;
 
@@ -409,7 +411,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.CLEAR_COOKIE,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasClearCookie: boolean } | undefined;
           break;
 
@@ -419,7 +421,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_PATH,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasPath: boolean } | undefined;
           break;
 
@@ -429,7 +431,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_BASE_URL,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasBaseUrl: boolean } | undefined;
           break;
 
@@ -439,7 +441,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_HOSTNAME,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasHostname: boolean } | undefined;
           break;
 
@@ -449,7 +451,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_PROTOCOL,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasProtocol: boolean } | undefined;
           break;
 
@@ -459,7 +461,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_REQ_GETTER,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasReqGetter: boolean } | undefined;
           break;
 
@@ -469,7 +471,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_IP,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasIp: boolean } | undefined;
           break;
 
@@ -479,7 +481,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_IPS,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasIps: boolean } | undefined;
           break;
 
@@ -489,7 +491,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.GET_SUBDOMAINS,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasSubdomains: boolean } | undefined;
           break;
 
@@ -500,7 +502,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.IS_SECURE,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasIsSecure: boolean } | undefined;
           break;
 
@@ -510,7 +512,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.IS_STALE,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasIsStale: boolean } | undefined;
           break;
 
@@ -520,7 +522,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.IS_FRESH,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasIsFresh: boolean } | undefined;
           break;
 
@@ -530,7 +532,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.IS_XHR,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasIsXhr: boolean } | undefined;
           break;
 
@@ -541,7 +543,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.SET_COOKIE,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasSetCookie: boolean } | undefined;
           break;
 
@@ -551,7 +553,7 @@ export class HandlerInjector {
             id: this.targetId,
             metaKey: AppMetaKeys.SET_REDIRECT,
             metaType: ProvidersTypes.CONTROLLER,
-            propertyKey: metadataMeta,
+            propertyKey: this.handler,
           }) as { position: number; hasRedirect: boolean } | undefined;
           break;
       }
@@ -566,7 +568,7 @@ export class HandlerInjector {
    */
   private configParams() {
     /// Assign metadatakey to properties
-    this.assignMetadata();
+    this.getParamsMetaValues();
 
     /// Add Params to the handler argument object
     this.configCtxParam();
