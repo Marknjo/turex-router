@@ -3,14 +3,12 @@ import process, { env } from 'process';
 import { join } from 'path';
 import express, { NextFunction, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
-// import { ClientRouter } from './routes/ClientRoutes';
-// import { AdminController } from './controllers/AdminController';
+
+/// Import Routes
 import './routes/ClientRoutes';
 import './routes/AdminRoutes';
 
-// new ClientRouter();
-// new AdminController();
-
+/// Prep Routes
 import { usePostRoutesStore } from './core/router/store/PostRoutesStore';
 
 const routers = usePostRoutesStore.findAll();

@@ -7,7 +7,7 @@ export enum AppMetaKeys {
   STATUS_CODE = 'statusCode',
   VIEW = 'view',
   PROVIDER = 'provider',
-  HANDLER_MIDDLEWARE = 'handlereMiddleware',
+  HANDLER_MIDDLEWARE = 'handlerMiddleware',
   ROUTER_MERGE_PARAMS = 'routerMergeParams',
   ROUTER_MERGE_PARAMS_WITH = 'routerMergeParamsWith',
   CONTROLLER_ID = 'controllerId',

@@ -1,5 +1,5 @@
 import { AppMetaKeys, GenericConstructor, ProvidersTypes } from '../../types';
-import CofingsPrepper from '../submodules/CofingsPrepper';
+import ConfigsPrepper from '../submodules/ConfigsPrepper';
 import ParamsMerger from '../submodules/ParamsMerger';
 import PostRoutes from '../submodules/PostRoutes';
 import { RouterConfigsOptions } from '../types';
@@ -26,7 +26,7 @@ export const RouterConfigs = function (configs: RouterConfigsOptions) {
     const targetId = ManageId.findId(ProvidersTypes.ROUTER)! as string;
 
     // /// Prep Merge Params configs
-    const mergeParamsConfigs = new CofingsPrepper(
+    const mergeParamsConfigs = new ConfigsPrepper(
       targetId,
       constructor,
       configs

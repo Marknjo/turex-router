@@ -120,16 +120,16 @@ class MetaStore extends BaseStore<MetaModel, Listener<MetaModel>> {
 
     // const foundType = metaType ? metaType : false;
     const filteredMetadata = this.store.filter(meta => {
-      /// Arrange search creteria
-      const idSearchCreteria = meta.id === id;
-      const keyAndTypeCreteria =
+      /// Arrange search criteria
+      const idSearchCriteria = meta.id === id;
+      const keyAndTypeCriteria =
         meta.metaKey === metaKey && meta.metaType === metaType;
 
       /// Get a propertyKey on a constructor
       if (foundMethod) {
         if (
-          idSearchCreteria &&
-          keyAndTypeCreteria &&
+          idSearchCriteria &&
+          keyAndTypeCriteria &&
           meta.propertyKey === propertyKey
         ) {
           return meta;
@@ -139,7 +139,7 @@ class MetaStore extends BaseStore<MetaModel, Listener<MetaModel>> {
       }
 
       /// Get get a metaKey on a constructor
-      if (idSearchCreteria && keyAndTypeCreteria) {
+      if (idSearchCriteria && keyAndTypeCriteria) {
         return meta;
       } else {
         return false;
@@ -243,7 +243,7 @@ class MetaStore extends BaseStore<MetaModel, Listener<MetaModel>> {
 
     /// Get a collection properties keys
     if (!withValues) {
-      returnResults = this.getPropertiesKeysWithoutDublicates(
+      returnResults = this.getPropertiesKeysWithoutDuplicates(
         filteredProperties
       ) as string[] | [];
     }
@@ -254,7 +254,7 @@ class MetaStore extends BaseStore<MetaModel, Listener<MetaModel>> {
   }
 
   /**
-   * Helper methods that abstracts mapping of properties keys with their values and and metakes
+   * Helper methods that abstracts mapping of properties keys with their values and and meta keys
    *
    * @param filteredProperties A collection of MetaModel
    * @returns a collection of properties names in a give target constructor
@@ -282,20 +282,20 @@ class MetaStore extends BaseStore<MetaModel, Listener<MetaModel>> {
   }
 
   /**
-   * Helper methods that abstracts process of filtering and mapping filtered properties to remove dublicates
+   * Helper methods that abstracts process of filtering and mapping filtered properties to remove duplicates
    *
    * @param filteredProperties A collection of MetaModel
    * @returns a collection of properties names in a give target constructor
    */
-  private getPropertiesKeysWithoutDublicates(filteredProperties: MetaModel[]) {
+  private getPropertiesKeysWithoutDuplicates(filteredProperties: MetaModel[]) {
     if (filteredProperties && filteredProperties.length > 0) {
       /// Map only properties
       const mappedProperties = filteredProperties.map(
         meta => meta.propertyKey
       ) as string[];
 
-      /// Filter dublicates
-      const filteredPropertiesWithoutDublicates = mappedProperties.reduce(
+      /// Filter Duplicates
+      const filteredPropertiesWithoutDuplicates = mappedProperties.reduce(
         (prevProp, currProp, indx) => {
           let prevPropIndx = prevProp.length - 1;
 
@@ -309,7 +309,7 @@ class MetaStore extends BaseStore<MetaModel, Listener<MetaModel>> {
         ['']
       );
 
-      return filteredPropertiesWithoutDublicates;
+      return filteredPropertiesWithoutDuplicates;
     }
   }
 }

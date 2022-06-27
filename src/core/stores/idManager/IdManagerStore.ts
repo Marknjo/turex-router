@@ -29,7 +29,7 @@ class IdManagerStore extends BaseStore<
   }
 
   /**
-   * Finds previous generete id or current id if prev id matches the current ID
+   * Finds previous generated id or current id if prev id matches the current ID
    *
    * @param providerType Different types of stores - representing services
    *
@@ -107,12 +107,12 @@ class IdManagerStore extends BaseStore<
    * Use in all in-class decorators i.e. Property, accessors, and method generators.
    *
    * Also call it before running everything else in the base decorator.
-   * RouterConfigs Class generator will need the Id to identiry which controller to assign the route.
+   * RouterConfigs Class generator will need the Id to identify which controller to assign the route.
    *
-   * Do not use it in the other non-base docorators,
+   * Do not use it in the other non-base decorators,
    * unless you are working with a different decorators for it's inner workings.
    *
-   * @param providerType A type describing what service isusing the ID -
+   * @param providerType A type describing what service issuing the ID -
    * incase you have different services consuming the decorator
    * @returns  A random generated id
    */
@@ -166,15 +166,15 @@ class IdManagerStore extends BaseStore<
 
   /**
    * Id generator based whether an id is generated or not
-   * @param providerType Based on MetaStoreTypes defination
+   * @param providerType Based on MetaStoreTypes definition
    * @param regenerateId Whether to regenerate a new ID or not. Used by controller
-   * @param regerateOptions Tracks pevious generated Id and current name of the controller
+   * @param regenerateOptions Tracks pervious generated Id and current name of the controller
    * @returns A random generated id
    */
   private generateIdFactory(
     providerType: ProvidersTypes,
     regenerateId?: boolean,
-    regerateOptions?: { type: ProvidersTypes; prevId: string; name: string }
+    regenerateOptions?: { type: ProvidersTypes; prevId: string; name: string }
   ) {
     /// Check if there's current provider id in the store
     const targetId = this.findId(providerType);
@@ -189,7 +189,7 @@ class IdManagerStore extends BaseStore<
     this.dispatch({
       id: generatedId,
       type: providerType,
-      ...(regerateOptions ? regerateOptions : {}),
+      ...(regenerateOptions ? regenerateOptions : {}),
     });
 
     return generatedId;

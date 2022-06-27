@@ -2,7 +2,7 @@ import { AppUtils } from '../../library/helpers/Utils';
 import { Meta } from '../../stores/meta';
 import { AppMetaKeys, GenericConstructor, ProvidersTypes } from '../../types';
 import {
-  RouterCofingsPrepper,
+  RouterConfigsPrepper,
   RouterConfigsOptions,
   RouterMergeParamsWithOptions,
   RouterPrepMergeParamsWithResponse,
@@ -24,7 +24,7 @@ import {
  * the router will handle merging behind the scenes for you;
  *
  */
-export default class CofingsPrepper {
+export default class ConfigsPrepper {
   /**
    * Stores the merge params option when declared via a route handler
    */
@@ -47,7 +47,7 @@ export default class CofingsPrepper {
    *
    * @returns
    */
-  getMergeParamsConfigs(): RouterCofingsPrepper {
+  getMergeParamsConfigs(): RouterConfigsPrepper {
     return {
       mergeParamsWithOptions: this.mergeParamsWithBasedOnSource(),
       mergeParamsOption: this.mergeParamsBasedOnSource(),
@@ -55,7 +55,7 @@ export default class CofingsPrepper {
   }
 
   /**
-   * Filters the merge options dublicates
+   * Filters the merge options duplicates
    * and transforms the mergeWithOptions route from Function to string,
    * the actual name of the Route merging params with
    *
@@ -65,7 +65,7 @@ export default class CofingsPrepper {
    * @param mergeParamsWithOptions
    * @returns
    */
-  private filterDublicatesAndTransform(
+  private filterDuplicatesAndTransform(
     mergeParamsWithOptions: RouterMergeParamsWithOptions[]
   ): { mergePath: string; routeName: string }[] {
     /// Type gurads
@@ -80,7 +80,7 @@ export default class CofingsPrepper {
     /// filterDefaults
     const filterDefaults = { mergePath: '', routeName: '' };
 
-    /// Filter dublicates
+    /// Filter Duplicates
     const transFormDublicate = mergeParamsWithOptions.reduce(
       (prevOp, currOp) => {
         const prevOpIndex = prevOp.length - 1;
@@ -164,7 +164,7 @@ export default class CofingsPrepper {
     | RouterPrepMergeParamsWithResponse[] {
     /// Use middleware where params merging via handler
     if (this.handlerMergeParamsWithOptions.length > 0) {
-      return this.filterDublicatesAndTransform(
+      return this.filterDuplicatesAndTransform(
         this.handlerMergeParamsWithOptions
       );
     }
@@ -174,7 +174,7 @@ export default class CofingsPrepper {
       this.configs.mergeParamsWith &&
       this.configs.mergeParamsWith.length > 0
     ) {
-      return this.filterDublicatesAndTransform(this.configs.mergeParamsWith);
+      return this.filterDuplicatesAndTransform(this.configs.mergeParamsWith);
     }
 
     return false;

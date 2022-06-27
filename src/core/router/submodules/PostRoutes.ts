@@ -3,8 +3,6 @@ import { ControllerModel, useCtrStore } from '../../providers/controller';
 import { ManageId } from '../../stores/idManager';
 import { ProvidersTypes } from '../../types';
 import { usePostRoutesStore } from '../store/PostRoutesStore';
-// import { AppMetaKeys } from '../../types';
-// import { RouterConfigs } from '../core/RouterConfigs';
 import { RouterConfigsOptions } from '../types';
 
 export default class PostRoutes {
@@ -14,7 +12,7 @@ export default class PostRoutes {
   private controllerId: string;
 
   /**
-   * Stores alll the controller handlers
+   * Stores all the controller handlers
    */
   private routerStore: ControllerModel[] = [];
 

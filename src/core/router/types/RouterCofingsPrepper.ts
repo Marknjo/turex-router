@@ -1,6 +1,6 @@
 import { RouterPrepMergeParamsWithResponse } from './RouterPrepMergeParamsWithResponse';
 
-export interface RouterCofingsPrepper {
+export interface RouterConfigsPrepper {
   mergeParamsWithOptions: RouterPrepMergeParamsWithResponse[] | boolean;
   mergeParamsOption: boolean;
 }

@@ -1,26 +1,14 @@
 /// Imports
-// import 'reflect-metadata';
 
 import { Meta } from '../../../stores/meta';
 import { HandlerDescriptor, ProvidersTypes, AppMetaKeys } from '../../../types';
-// import { Controller } from '../Controller';
 import { HttpMethods } from '../types';
-
-export let currentController: string = '';
 
 /// Define route binder decorator
 const routesBinder = function (httpMethod: HttpMethods) {
   return function (url: string) {
     return function (_: any, methodName: string, _desc: HandlerDescriptor) {
-      currentController = 'ClientControllerId';
-
       /// Define Associated Method
-      // Reflect.defineMetadata(
-      //   AppMetaKeys.METHOD,
-      //   httpMethod,
-      //   constructor,
-      //   methodName
-      // );
 
       Meta.define<string>({
         metaKey: AppMetaKeys.ROUTE_URL,

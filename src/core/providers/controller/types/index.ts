@@ -6,7 +6,7 @@ export * from './ParamsDecoratorsActions';
 export * from './HttpMethods';
 
 /// Cookies
-//export * from './CookiesDefination';
+//export * from './CookiesDefinition';
 
 // Handler
 export * from './ControllerHandler';
