@@ -17,6 +17,11 @@ export class HandlerInjector {
   private targetId: string;
 
   /**
+   * Store previous provider type
+   */
+  private prevTargetId?: string;
+
+  /**
    * Stores collection of all Params assigned to a handler
    */
   private handlerArgs: any[] = [];
@@ -210,12 +215,13 @@ export class HandlerInjector {
     this.targetId = ManageId.findCurrentId(providerType) as string;
 
     /// Get all the meta data keys on the object
-    this.metaDataKeys = Meta.getPropertiesKeys(this.targetId, providerType) as
-      | string[]
-      | [];
+    this.optimizeMetadataKeysAssignment(providerType);
 
     /// config all Param meta data
     this.configParams();
+
+    /// optimize id setting
+    this.optimizeTargetIdAssignment();
   }
 
   /**
@@ -231,6 +237,38 @@ export class HandlerInjector {
       return this.handlerArgs;
     } catch (error) {
       throw error;
+    }
+  }
+
+  /**
+   * Sets a new target id only when the previous id is not the same as current id
+   * And the the previous id is undefined
+   *
+   * This ensures the the target id is not set more than once for the same target constructor.
+   */
+  private optimizeTargetIdAssignment() {
+    if (!this.prevTargetId || this.prevTargetId !== this.targetId) {
+      this.prevTargetId = this.targetId;
+    }
+  }
+
+  /**
+   * Ensures the next call cycle does not call getPropertiesKeys of the provider
+   * type has not changed and the id is still the same
+   *
+   *  don't get the metadatakeys of the provider type and the id has not changed
+   *
+   * @param providerType
+   */
+  private optimizeMetadataKeysAssignment(providerType: ProvidersTypes) {
+    if (
+      (this.metaDataKeys.length === 0 && !this.prevTargetId) ||
+      (this.metaDataKeys.length > 0 && this.prevTargetId !== this.targetId)
+    ) {
+      this.metaDataKeys = Meta.getPropertiesKeys(
+        this.targetId,
+        providerType
+      ) as string[] | [];
     }
   }
 
