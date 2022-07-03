@@ -13,7 +13,7 @@ import { usePostRoutesStore } from './core/router/store/PostRoutesStore';
 
 const routers = usePostRoutesStore.findAll();
 
-console.log({ routers });
+// console.log({ routers });
 
 const app = express();
 

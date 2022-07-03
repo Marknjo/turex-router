@@ -20,16 +20,20 @@ export const Controller = function () {
       constructorName: constructor.name,
     });
 
-    // console.log(
-    //   `Controller base class decorator :(${constructor.name}): running...📍📍📍📍`
-    // );
-
     // Generate Id if not declared
     const targetId = ManageId.findId(ProvidersTypes.CONTROLLER) as string;
 
-    const handlers = AppUtils.getControllerHandlers(constructor);
+    const propertyKeys = Meta.getPropertiesKeysMeta(
+      targetId,
+      ProvidersTypes.CONTROLLER
+    );
 
-    console.log({ handlers }, '🚩🚩🚩🚩🚩🚩');
+    const metaValues = propertyKeys.map(meta => meta.metaValue);
+
+    // console.log({ metaValues });
+    console.log({ propertyKeys });
+
+    const handlers = AppUtils.getControllerHandlers(constructor);
 
     for (let handler of handlers) {
       const httpMethod: HttpMethods | boolean = Meta.getData<HttpMethods>({

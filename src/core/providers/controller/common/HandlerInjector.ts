@@ -29,7 +29,11 @@ export class HandlerInjector {
   /**
    * Gets all metadata keys of the _construct
    */
-  private metaDataKeys: string[] = [];
+  private metaDataKeys: {
+    propertyKey: string;
+    metaValue: string | { [key: string]: any };
+    metaKey: AppMetaKeys;
+  }[] = [];
 
   /// Param keys
   /**
@@ -262,15 +266,9 @@ export class HandlerInjector {
    * @param providerType
    */
   private getCurrentPropertyKeyMetadata(providerType: ProvidersTypes) {
-    if (
-      this.metaDataKeys.length === 0 &&
-      this.prevPropertyKey !== this.propertyKey
-    ) {
-      this.metaDataKeys = Meta.getPropertiesKeys(
-        this.targetId,
-        providerType
-      ) as string[] | [];
-    }
+    this.metaDataKeys = Meta.getPropertiesKeys(this.targetId, providerType) as
+      | string[]
+      | [];
   }
 
   /**
@@ -284,7 +282,7 @@ export class HandlerInjector {
     }
 
     this.metaDataKeys.forEach(metadataMeta => {
-      switch (metadataMeta) {
+      switch (metadataMeta.metaKey) {
         // Assign Context object
         case AppMetaKeys.SET_REDIRECT:
           this.getCtxMeta = Meta.getData({

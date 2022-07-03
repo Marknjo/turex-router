@@ -295,19 +295,23 @@ class MetaStore extends BaseStore<MetaModel, Listener<MetaModel>> {
       ) as string[];
 
       /// Filter Duplicates
-      const filteredPropertiesWithoutDuplicates = mappedProperties.reduce(
-        (prevProp, currProp, indx) => {
-          let prevPropIndx = prevProp.length - 1;
+      // const filteredPropertiesWithoutDuplicates = mappedProperties.reduce(
+      //   (prevProp, currProp, indx) => {
+      //     let prevPropIndx = prevProp.length - 1;
 
-          if (prevProp[prevPropIndx] !== currProp) {
-            prevProp =
-              prevProp[indx] === '' ? [currProp] : [...prevProp, currProp];
-          }
+      //     if (prevProp[prevPropIndx] !== currProp) {
+      //       prevProp =
+      //         prevProp[indx] === '' ? [currProp] : [...prevProp, currProp];
+      //     }
 
-          return prevProp;
-        },
-        ['']
-      );
+      //     return prevProp;
+      //   },
+      //   ['']
+      // );
+
+      const filteredPropertiesWithoutDuplicates = [
+        ...new Set(mappedProperties),
+      ];
 
       return filteredPropertiesWithoutDuplicates;
     }
